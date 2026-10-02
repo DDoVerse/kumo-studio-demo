@@ -14,12 +14,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const ja = lang === "ja";
+  const locale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE;
   return {
     title: ja ? "お問い合わせ" : "Contact",
     description: ja
       ? "プロジェクトのご相談。2営業日以内に返信します。"
       : "Start a project with Kumo Studio. We reply within two working days.",
-    alternates: alternatesFor("/contact"),
+    alternates: alternatesFor(locale, "/contact"),
   };
 }
 

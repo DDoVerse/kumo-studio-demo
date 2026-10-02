@@ -31,11 +31,16 @@ export function absoluteUrl(locale: Locale, path = "/"): string {
 
 /**
  * generateMetadata 용 alternates.
- * x-default 는 영어로 보낸다 — 어느 언어도 아닌 방문자의 기본값.
+ *
+ * canonical 은 반드시 "그 페이지 자신"이어야 한다. 기본 로케일로 고정하면
+ * 일본어 페이지가 스스로를 영어판의 중복이라고 선언하게 되고, 바로 아래
+ * hreflang 과 정면 충돌해 색인에서 일본어가 통째로 빠진다.
+ *
+ * x-default 만 영어로 보낸다 — 어느 언어도 아닌 방문자의 기본값.
  */
-export function alternatesFor(path = "/") {
+export function alternatesFor(locale: Locale, path = "/") {
   return {
-    canonical: absoluteUrl(DEFAULT_LOCALE, path),
+    canonical: absoluteUrl(locale, path),
     languages: {
       en: absoluteUrl("en", path),
       ja: absoluteUrl("ja", path),

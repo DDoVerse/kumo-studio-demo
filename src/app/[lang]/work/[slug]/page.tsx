@@ -28,12 +28,12 @@ export async function generateMetadata({
   if (!isLocale(lang)) return {};
   const c = await getCaseStudy(slug);
   if (!c) return {};
-  const locale = lang as Locale;
+  const locale: Locale = lang;
   return {
     title: c.title[locale],
     description: c.summary[locale],
     // 언어 전환이 같은 글의 다른 언어판을 가리키는 근거가 여기서도 나온다.
-    alternates: alternatesFor(`/work/${slug}`),
+    alternates: alternatesFor(locale, `/work/${slug}`),
   };
 }
 

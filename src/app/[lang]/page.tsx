@@ -11,7 +11,8 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  return { alternates: alternatesFor("/"), ...(isLocale(lang) ? {} : {}) };
+  const locale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE;
+  return { alternates: alternatesFor(locale, "/") };
 }
 
 export default async function HomePage({

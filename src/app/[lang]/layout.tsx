@@ -23,6 +23,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
+  const locale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE;
   const ja = lang === "ja";
   return {
     metadataBase: new URL(SITE_URL),
@@ -33,7 +34,7 @@ export async function generateMetadata({
     description: ja
       ? "東京・吉祥寺のデザインスタジオ。アイデンティティ、アーカイブ、二言語のウェブサイトを手がけます。"
       : "A design studio in Kichijoji, Tokyo. Identities, archives, and the bilingual websites that hold them.",
-    alternates: alternatesFor("/"),
+    alternates: alternatesFor(locale, "/"),
     openGraph: {
       type: "website",
       locale: ja ? "ja_JP" : "en_GB",

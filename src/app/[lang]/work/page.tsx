@@ -13,12 +13,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const ja = lang === "ja";
+  const locale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE;
   return {
     title: ja ? "実績" : "Work",
     description: ja
       ? "Kumo Studio の主なプロジェクト。"
       : "Selected projects by Kumo Studio.",
-    alternates: alternatesFor("/work"),
+    alternates: alternatesFor(locale, "/work"),
   };
 }
 
