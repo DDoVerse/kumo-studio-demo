@@ -5,9 +5,9 @@ import { getCaseStudies } from "@/lib/content";
 /**
  * sitemap.xml.
  *
- * 각 URL 에 alternates.languages 를 넣는다 — 공고가 요구하는 항목이고,
- * generateMetadata 의 hreflang 과 같은 헬퍼(absoluteUrl)에서 나오므로
- * 둘이 어긋날 수 없다.
+ * Every URL carries alternates.languages. These come from the same helper
+ * (absoluteUrl) that generateMetadata uses for hreflang, so the sitemap and
+ * the page metadata cannot drift apart.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const cases = await getCaseStudies();

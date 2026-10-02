@@ -47,7 +47,7 @@ export default async function WorkPage({
 
       <section className="border-t border-rule">
         <div className="mx-auto max-w-[76rem] px-6 md:px-10">
-          {/* 표가 아니라 색인이라는 신호. 괘선과 열 제목만으로 구조를 만든다. */}
+          {/* Column headings and rules alone — an index, not a table. */}
           <div className="hidden md:grid grid-cols-[3.5rem_1fr_12rem_5rem] gap-x-4 py-4 text-[11px] uppercase tracking-[0.14em] text-ink-3">
             <span>{t.work.index}</span>
             <span>{t.work.client}</span>

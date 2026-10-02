@@ -8,8 +8,8 @@ import SiteFooter from "@/components/SiteFooter";
 import JsonLd from "@/components/JsonLd";
 
 /**
- * 모든 경로가 [lang] 아래를 지나므로 이것이 루트 레이아웃이다.
- * html lang 을 로케일별로 세우기 위해 일부러 여기에 둔다.
+ * Every route passes through [lang], so this is the root layout. It lives
+ * here deliberately: it is the only place <html lang> can be set per locale.
  */
 
 export function generateStaticParams() {
@@ -65,8 +65,9 @@ export default async function RootLayout({
         >
           {t.skip}
         </a>
-        {/* 가상 스튜디오임을 숨기지 않는다. 가상 실적을 실제처럼 보이게 두면
-            정직성 문제가 되고, 지원 맥락에서는 그게 가장 큰 감점이다. */}
+        {/* The studio is fictional and says so. Invented case studies left
+            to read as real client work is a worse problem than any missing
+            feature. */}
         <p className="border-b border-rule bg-paper px-6 py-2.5 text-center text-[12.5px] leading-relaxed text-ink-3 md:px-10">
           {t.demoBanner}
         </p>
@@ -76,8 +77,9 @@ export default async function RootLayout({
         </main>
         <SiteFooter locale={locale} />
 
-        {/* Organization + WebSite 는 전 페이지 공통이라 레이아웃에 둔다.
-            Service·BreadcrumbList·VideoObject 는 해당 페이지에서 붙인다. */}
+        {/* Organization and WebSite apply to every page, so they sit in the
+            layout. Service, BreadcrumbList and VideoObject are emitted by the
+            pages that own them. */}
         <JsonLd
           data={[
             {

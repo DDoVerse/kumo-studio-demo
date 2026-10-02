@@ -51,7 +51,7 @@ export default function SiteFooter({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        {/* 연도 범위 표기는 참고한 스튜디오들의 공통 관례 (© 2009 – 2026). */}
+        {/* A year range is the convention on the reference sites. */}
         <div className="mt-14 flex flex-wrap items-baseline justify-between gap-4 border-t border-rule pt-6 text-[13px] text-ink-3">
           <p className="tnum">© 2019 – {year} Kumo Studio</p>
           <p>{t.footer.legal}</p>

@@ -3,15 +3,17 @@ import { toHubSpotPayload, idempotencyKey, type Enquiry } from "./enquiry";
 export type DeliveryResult = "sent" | "queued";
 
 /**
- * 문의 전달.
+ * Enquiry delivery.
  *
- * 성공 경로는 HubSpot Forms API v3 한 번의 POST 다. 중요한 건 실패 경로다 —
- * CRM 이 죽어도 문의는 사라지면 안 된다.
+ * The happy path is a single POST to the HubSpot Forms API v3. The failure
+ * path is the interesting one: an enquiry must not disappear because the
+ * CRM is down.
  *
- *   HubSpot 실패 → Redis 큐에 적재 → 이메일로 즉시 폴백 → 크론이 지수 백오프 재시도
+ *   HubSpot fails → queue in Redis → email immediately → cron retries with backoff
  *
- * 멱등 키를 같이 저장하므로 재시도가 연락처를 중복 생성하지 않는다.
- * 재시도 자체가 중복을 만드는 것이 이 구조에서 가장 흔한 사고다.
+ * The idempotency key is stored alongside, so retries cannot create
+ * duplicate contacts — retries producing duplicates being the usual way
+ * this design goes wrong.
  */
 export async function deliver(
   enquiry: Enquiry,
@@ -36,14 +38,14 @@ export async function deliver(
         );
         if (res.ok) return "sent";
       } else {
-        // 자격 증명이 없는 리뷰 환경. 전송을 성공으로 위장하지 않고
-        // 큐 경로로 보낸다 — 그래야 화면이 사실을 말한다.
+        // A review environment with no credentials. Rather than fake a
+        // success, take the queue path so the page tells the truth.
         await enqueue(key, enquiry, "no-credentials");
         await emailFallback(enquiry);
         return "queued";
       }
     } catch {
-      // 아래 큐 경로로 떨어진다.
+      // Falls through to the queue path below.
     }
   }
 
@@ -53,8 +55,9 @@ export async function deliver(
 }
 
 /**
- * Redis 큐 적재. REDIS_URL 이 없으면 서버 로그에만 남긴다 —
- * 리뷰어가 인프라 없이 열어봐도 흐름이 보이게 하기 위함이다.
+ * Queue in Redis. With no REDIS_URL the record goes to the server log
+ * instead, so the flow is still visible to someone running this with no
+ * infrastructure at all.
  */
 async function enqueue(key: string, enquiry: Enquiry, reason: string): Promise<void> {
   const url = process.env.REDIS_URL;
@@ -69,14 +72,15 @@ async function enqueue(key: string, enquiry: Enquiry, reason: string): Promise<v
   const client = createClient({ url });
   try {
     await client.connect();
-    // 멱등 키를 그대로 필드명으로 쓴다. 같은 문의는 덮어쓰기만 되고 늘지 않는다.
+    // The idempotency key is the field name: the same enquiry overwrites
+    // rather than accumulating.
     await client.hSet("enquiry:queue", key, JSON.stringify(record));
   } finally {
     await client.quit().catch(() => {});
   }
 }
 
-/** Resend 이메일 폴백. 큐가 비워지기 전에도 사람이 먼저 읽을 수 있게 한다. */
+/** Email fallback, so a person has the enquiry before the queue drains. */
 async function emailFallback(enquiry: Enquiry): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.ENQUIRY_EMAIL ?? "hello@example.com";

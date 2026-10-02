@@ -7,14 +7,14 @@ import type { Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n/dictionary";
 
 /**
- * 문의 폼.
+ * Enquiry form.
  *
- * 핵심은 이 컴포넌트가 없어도 폼이 동작한다는 점이다. action 은 Server
- * Action 이라 JS 가 꺼져 있으면 브라우저가 그냥 POST 한다. 여기 있는
- * 클라이언트 코드는 전부 "보강"일 뿐이다 — 전송 중 버튼 비활성화와
- * 인라인 오류 표시.
+ * The point is that the form works without this component. The action is a
+ * Server Action, so with JavaScript disabled the browser simply posts it.
+ * Everything here is enhancement: a disabled button while sending, and
+ * inline errors.
  *
- * 사이트 전체에서 클라이언트 JS 가 실리는 두 곳 중 나머지 하나다.
+ * One of the only two files on the site that ship client JavaScript.
  */
 
 const field =

@@ -3,16 +3,16 @@
 import { useState } from "react";
 
 /**
- * Vimeo 클릭 후 로드 파사드.
+ * Click-to-load Vimeo facade.
  *
- * 누르기 전까지 Vimeo 로 아무 요청도 나가지 않는다 — 임베드는 보통
- * 수백 KB 의 서드파티 JS 를 끌고 오므로, 이것이 성능 예산을 지키는
- * 가장 큰 한 수다.
+ * Nothing is requested from Vimeo until someone presses play. An embed
+ * usually drags in a few hundred KB of third-party JavaScript, so this is
+ * the single largest thing keeping the page inside its budget.
  *
- * 포스터 이미지를 쓰지 않고 타이포그래피만으로 만든다. 이 사이트는
- * 장식용 이미지를 두지 않기 때문이고, 덕분에 파사드 자체의 무게도 0 이다.
+ * It is typographic rather than a poster image, because the site carries no
+ * decorative imagery — which also means the facade itself weighs nothing.
  *
- * 이 파일이 사이트 전체에서 클라이언트 JS 가 실리는 두 곳 중 하나다.
+ * One of the only two files on the site that ship client JavaScript.
  */
 export default function VideoFacade({
   vimeoId,

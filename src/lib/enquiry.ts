@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 /**
- * 문의 페이로드.
+ * Enquiry payload.
  *
- * 이 스키마가 CRM 연동의 계약서다. JSON Schema 로 내보내 저장소에
- * 동봉하므로(scripts/emit-schema.ts) CRM 쪽이 추측할 일이 없다.
+ * This schema is the contract with the CRM. It is the single definition of
+ * the shape, so the CRM side never has to guess at field names.
  */
 export const EnquirySchema = z.object({
   name: z.string().trim().min(1).max(120),
@@ -17,7 +17,7 @@ export const EnquirySchema = z.object({
 
 export type Enquiry = z.infer<typeof EnquirySchema>;
 
-/** HubSpot Forms API v3 가 받는 모양으로 변환. */
+/** Reshape into what the HubSpot Forms API v3 accepts. */
 export function toHubSpotPayload(e: Enquiry) {
   return {
     fields: [
@@ -33,8 +33,9 @@ export function toHubSpotPayload(e: Enquiry) {
 }
 
 /**
- * 멱등 키. 재시도가 같은 문의를 두 번 만들지 않게 한다.
- * 같은 사람이 같은 내용을 다시 보내면 같은 키가 나오도록 본문까지 넣는다.
+ * Idempotency key, so a retry cannot create the same enquiry twice. The
+ * message is part of the hash, so the same person sending the same thing
+ * again produces the same key.
  */
 export async function idempotencyKey(e: Enquiry): Promise<string> {
   const raw = `${e.email}|${e.message}`;

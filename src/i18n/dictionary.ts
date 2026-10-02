@@ -1,12 +1,12 @@
 import type { Locale } from "./config";
 
 /**
- * UI 문구. 콘텐츠(케이스 스터디·서비스)는 Sanity/시드에서 오고,
- * 여기는 껍데기 문구만 둔다.
+ * UI strings. Content — case studies and services — comes from Sanity or
+ * the seed; only chrome lives here.
  *
- * 내비 라벨은 참고한 스튜디오 사이트들의 관례를 따랐다 — 평범한 명사다.
- * mount.jp 는 About / Approach / Services / Portfolio / Members,
- * baqemono.jp 는 Creation / Atelier / Recruit / Contact 를 쓴다.
+ * The navigation labels follow the convention on the reference sites, which
+ * use plain nouns: mount.jp has About / Approach / Services / Portfolio /
+ * Members, baqemono.jp has Creation / Atelier / Recruit / Contact.
  */
 export const DICT = {
   en: {

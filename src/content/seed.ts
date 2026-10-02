@@ -9,13 +9,13 @@ export type CaseStudy = {
   title: L<string>;
   summary: L<string>;
   disciplines: L<string[]>;
-  /** 본문 문단. Sanity 전환 시 Portable Text 로 바뀔 자리. */
+  /** Body paragraphs. Becomes Portable Text once Sanity is connected. */
   body: L<string[]>;
-  /** Vimeo 영상 ID. 있으면 클릭 후 로드 파사드를 띄운다(포스터 이미지 없이 타이포로). */
+  /** Vimeo id. When present, a typographic click-to-load facade is shown. */
   vimeoId?: string;
-  /** 파사드에 표시할 러닝타임. */
+  /** Running time, shown on the facade. */
   filmLength?: string;
-  /** 결과 수치 — 케이스 스터디의 설득력은 여기서 나온다. */
+  /** Outcome figures — where a case study earns its credibility. */
   results: L<{ value: string; label: string }[]>;
 };
 
@@ -27,11 +27,12 @@ export type Service = {
 };
 
 /**
- * 로컬 시드.
+ * Local seed content.
  *
- * Sanity 프로젝트가 연결되면(NEXT_PUBLIC_SANITY_PROJECT_ID) 이 파일은
- * 쓰이지 않는다. 자격 증명 없이도 사이트가 완전히 동작하도록 두는 것이
- * 목적이다 — 리뷰어가 아무것도 설정하지 않고 열어볼 수 있어야 한다.
+ * Once a Sanity project is connected (NEXT_PUBLIC_SANITY_PROJECT_ID) this
+ * file is no longer read. It exists so the site works with no credentials
+ * at all: a reviewer should be able to clone and open it without setting
+ * anything up.
  */
 export const CASE_STUDIES: CaseStudy[] = [
   {

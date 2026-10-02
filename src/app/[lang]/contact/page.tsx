@@ -52,8 +52,8 @@ export default async function ContactPage({
 
       <section className="border-t border-rule">
         <div className="mx-auto max-w-[76rem] px-6 md:px-10 py-14 md:py-20">
-          {/* 성공 상태는 쿼리스트링으로 온다 — JS 가 꺼져 있어도 보여야 하므로
-              클라이언트 state 에 두지 않는다. */}
+          {/* The success state arrives in the query string: it has to render
+              with JavaScript disabled, so it cannot live in client state. */}
           {sent ? (
             <p
               role="status"
@@ -65,13 +65,13 @@ export default async function ContactPage({
 
           <EnquiryForm locale={locale} t={t} />
 
-          {/* 데모 스위치 상태 표시. 실제 납품본에서는 환경변수로 꺼진다. */}
+          {/* Demo switch. A real delivery would drop this section. */}
           <aside className="mt-16 max-w-[40rem] border-t border-rule pt-6">
             <h2 className="text-[11px] uppercase tracking-[0.14em] text-ink-3">
               {t.contact.demoTitle}
             </h2>
             <p className="mt-3 text-[14px] leading-[1.8] text-ink-2">{t.contact.demoNote}</p>
-            {/* form action 이라 JavaScript 없이도 눌린다. */}
+            {/* A form action, so it works without JavaScript. */}
             <form action={toggleOutage} className="mt-5 flex items-baseline gap-4">
               <input type="hidden" name="locale" value={locale} />
               <button

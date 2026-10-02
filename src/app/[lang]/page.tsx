@@ -29,8 +29,8 @@ export default async function HomePage({
 
   return (
     <>
-      {/* 히어로 — 줄바꿈으로 리듬을 만드는 대형 타이포.
-          baqemono.jp 의 "A / digital / creative / atelier," 와 같은 방식. */}
+      {/* Hero — large type whose rhythm comes from the line breaks, the way
+          baqemono.jp sets "A / digital / creative / atelier,". */}
       <section className="mx-auto max-w-[76rem] px-6 md:px-10 pt-20 pb-16 md:pt-32 md:pb-24">
         <h1 className="text-[clamp(2.4rem,7.2vw,5.6rem)] leading-[1.04] tracking-[-0.035em] font-medium">
           {t.home.line.map((l, i) => (
@@ -44,7 +44,7 @@ export default async function HomePage({
         </p>
       </section>
 
-      {/* 주요 실적 — 카드가 아니라 괘선으로 나눈 색인 행 */}
+      {/* Selected work — index rows divided by rules, not cards. */}
       <section className="border-t border-rule">
         <div className="mx-auto max-w-[76rem] px-6 md:px-10">
           <h2 className="py-6 text-[12px] uppercase tracking-[0.14em] text-ink-3">
@@ -84,7 +84,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 할 수 있는 일 */}
+      {/* What we do */}
       <section className="border-t border-rule">
         <div className="mx-auto max-w-[76rem] px-6 md:px-10">
           <h2 className="py-6 text-[12px] uppercase tracking-[0.14em] text-ink-3">

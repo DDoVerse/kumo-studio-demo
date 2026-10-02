@@ -1,20 +1,21 @@
 @import "tailwindcss";
 
 /*
-  Kumo Studio — 디자인 시스템
+  Kumo Studio — design system
 
-  원칙 세 가지. 참고한 스튜디오 사이트(mount.jp, baqemono.jp)에서 공통으로
-  관찰되는 것들이다.
+  Four rules, taken from what the reference studio sites (mount.jp,
+  baqemono.jp) have in common.
 
-  1. 카드·알약·둥근 모서리·그림자·그라데이션을 쓰지 않는다.
-     구획은 전부 1px 괘선과 여백으로만 만든다.
-  2. 액센트 색이 없다. 위계는 크기·굵기·여백으로만 세운다.
-     색을 쓰는 곳은 링크 밑줄과 포커스 링뿐이다.
-  3. 본문용 서체 하나만 쓴다. 일본어 글자 밀도에서 무너지지 않는
-     시스템 스택을 쓰고, 웹폰트는 받지 않는다(= 성능 예산의 근거).
-  4. 팔레트는 종이색 하나로 간다. 다크모드를 두지 않는다 — 참고한
-     스튜디오 사이트들이 한 가지 팔레트에 전념하기 때문이고, 두 벌을
-     유지하면 괘선 대비처럼 미묘한 값이 반드시 한쪽에서 무너진다.
+  1. No cards, pills, rounded corners, shadows or gradients. Structure is
+     made entirely from 1px rules and whitespace.
+  2. No accent colour. Hierarchy comes from size, weight and space. The
+     only coloured things are link underlines and the focus ring.
+  3. One typeface for everything: a system stack chosen to hold up at
+     Japanese text density, with no web font downloaded. That choice is
+     what makes the performance budget achievable.
+  4. One palette, and no dark mode. The reference sites each commit to a
+     single palette, and maintaining two means a subtle value such as rule
+     contrast eventually breaks in one of them.
 */
 
 @theme {
@@ -42,16 +43,16 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  font-feature-settings: "palt" 1; /* 일본어 약물 자간 보정 */
+  font-feature-settings: "palt" 1; /* tighten Japanese punctuation spacing */
 }
 
-/* 포커스는 반드시 보이게. 공고의 WCAG AA 요건. */
+/* Focus must stay visible — WCAG AA. */
 :focus-visible {
   outline: 2px solid var(--color-ink);
   outline-offset: 3px;
 }
 
-/* 모션을 끈 사용자에게는 전환을 전부 없앤다. */
+/* Remove every transition for anyone who has asked for reduced motion. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -63,7 +64,7 @@ body {
   }
 }
 
-/* 세로쓰기 숫자 — 작업 색인의 연도가 흔들리지 않게 */
+/* Tabular figures so years in the work index do not shift column. */
 .tnum {
   font-variant-numeric: tabular-nums;
 }

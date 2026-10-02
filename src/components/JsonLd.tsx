@@ -1,6 +1,6 @@
 /**
- * JSON-LD 주입. 공고 요건은 Organization / WebSite / Service /
- * BreadcrumbList / VideoObject 5종이며 Person 은 넣지 않는다.
+ * JSON-LD injection. The five types used are Organization, WebSite,
+ * Service, BreadcrumbList and VideoObject. Person is deliberately omitted.
  */
 export default function JsonLd({ data }: { data: object[] }) {
   return (
@@ -9,7 +9,7 @@ export default function JsonLd({ data }: { data: object[] }) {
         <script
           key={i}
           type="application/ld+json"
-          // 콘텐츠는 전부 우리가 만든 것이라 신뢰 가능. </script> 만 막는다.
+          // All of this is our own content; only </script> needs escaping.
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(d).replace(/</g, "\u003c"),
           }}

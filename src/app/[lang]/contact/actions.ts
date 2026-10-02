@@ -13,11 +13,11 @@ export type FormState = {
 };
 
 /**
- * 문의 제출.
+ * Enquiry submission.
  *
- * Server Action 이므로 JavaScript 가 꺼져 있어도 동작한다 — 브라우저가
- * form 을 그냥 POST 하고, 결과는 리다이렉트로 돌아온다. 그래서 성공 상태를
- * 클라이언트 state 가 아니라 쿼리스트링으로 넘긴다.
+ * A Server Action, so this works with JavaScript disabled — the browser
+ * posts the form and the result comes back as a redirect. That is also why
+ * the success state travels in the query string rather than client state.
  */
 export async function submitEnquiry(
   _prev: FormState,
@@ -41,7 +41,7 @@ export async function submitEnquiry(
         errors[field] = true;
       }
     }
-    // 어느 칸도 특정 못 했으면 폼 전체 오류로 돌린다.
+    // If no single field can be blamed, report it against the form.
     if (Object.keys(errors).length === 0) errors.form = true;
     return { status: "error", errors, values: raw };
   }

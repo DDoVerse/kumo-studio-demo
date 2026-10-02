@@ -32,7 +32,7 @@ export async function generateMetadata({
   return {
     title: c.title[locale],
     description: c.summary[locale],
-    // 언어 전환이 같은 글의 다른 언어판을 가리키는 근거가 여기서도 나온다.
+    // This is also what lets the language switch resolve to this same document.
     alternates: alternatesFor(locale, `/work/${slug}`),
   };
 }
