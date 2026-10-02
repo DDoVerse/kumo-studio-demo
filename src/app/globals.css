@@ -1,26 +1,69 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Kumo Studio — 디자인 시스템
+
+  원칙 세 가지. 참고한 스튜디오 사이트(mount.jp, baqemono.jp)에서 공통으로
+  관찰되는 것들이다.
+
+  1. 카드·알약·둥근 모서리·그림자·그라데이션을 쓰지 않는다.
+     구획은 전부 1px 괘선과 여백으로만 만든다.
+  2. 액센트 색이 없다. 위계는 크기·굵기·여백으로만 세운다.
+     색을 쓰는 곳은 링크 밑줄과 포커스 링뿐이다.
+  3. 본문용 서체 하나만 쓴다. 일본어 글자 밀도에서 무너지지 않는
+     시스템 스택을 쓰고, 웹폰트는 받지 않는다(= 성능 예산의 근거).
+  4. 팔레트는 종이색 하나로 간다. 다크모드를 두지 않는다 — 참고한
+     스튜디오 사이트들이 한 가지 팔레트에 전념하기 때문이고, 두 벌을
+     유지하면 괘선 대비처럼 미묘한 값이 반드시 한쪽에서 무너진다.
+*/
+
+@theme {
+  --color-paper: #f4f3ef;
+  --color-ink: #16161a;
+  --color-ink-2: #5a5a62;
+  --color-ink-3: #8e8e96;
+  --color-rule: #d8d6ce;
+  --color-rule-2: #bebbb0;
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo,
+    "Noto Sans KR", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "palt" 1; /* 일본어 약물 자간 보정 */
+}
+
+/* 포커스는 반드시 보이게. 공고의 WCAG AA 요건. */
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+/* 모션을 끈 사용자에게는 전환을 전부 없앤다. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 세로쓰기 숫자 — 작업 색인의 연도가 흔들리지 않게 */
+.tnum {
+  font-variant-numeric: tabular-nums;
 }
